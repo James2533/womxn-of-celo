@@ -18,6 +18,7 @@ import WomxnOfCelo from "./../abi/WomxnOfCelo.json";
 
 import { useDispatch, useSelector } from "react-redux";
 import { fetchData } from "../redux/data/dataActions";
+import { connect } from "../redux/blockchain/blockchainActions";
 
 export default function HeroSection({
   showPopup,
@@ -107,11 +108,22 @@ export default function HeroSection({
 
         <Menu>
           <div className="btn-center">
-            {!(
-              blockchain.account === "" ||
-              blockchain.account === undefined ||
-              blockchain.smartContract === null
-            ) && (
+            {blockchain.account === "" ||
+            blockchain.account === undefined ||
+            blockchain.smartContract === null ? (
+              <div className="dropdown d-inline-flex align-items-center justify-content-center align-self-center">
+                <button
+                  type="button"
+                  className="btn w-full"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    dispatch(connect());
+                  }}
+                >
+                  Connect wallet
+                </button>
+              </div>
+            ) : (
               <div className="dropdown d-inline-flex align-items-center justify-content-center align-self-center flex-col space-y-4">
                 <br />
                 <br />
